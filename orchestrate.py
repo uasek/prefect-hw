@@ -12,6 +12,8 @@ from prefect import flow, task
 from prefect.artifacts import create_markdown_artifact
 from datetime import datetime
 
+from prefect_email import EmailServerCredentials, email_send_message
+email_credentials_block = EmailServerCredentials.load("uasekus-gmail")
 
 @task(retries=3, retry_delay_seconds=2, name="Read taxi data")
 def read_data(
@@ -111,6 +113,7 @@ def train_best_model(
 
         mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
 
+        # make a report in prefect
         report = f"""# Model results
 
         |    Created time    | RMSE on val |
@@ -121,6 +124,31 @@ def train_best_model(
         create_markdown_artifact(
             markdown=report,
             key="example-report"
+        )
+
+        # send a message
+        message = f"""Hey there!
+
+        This is an email sent by prefect – a Python library for ML-workflow
+        orchestration.
+
+        Docs: https://docs.prefect.io/
+
+        MLOps Zoomcamp (cohort 2023): https://github.com/DataTalksClub/mlops-zoomcamp
+
+        Sincerely,
+        My past self from {datetime.now()}
+
+        P.S.
+        By the way, the model's rmse on val is {rmse:.3f} 
+        """
+
+        email_send_message(
+            subject="Example email from prefect",
+            email_server_credentials=email_credentials_block,
+            msg=message,
+            email_from="uasekus@gmail.com",
+            email_to="myubaranov@gmail.com"
         )
 
     return None

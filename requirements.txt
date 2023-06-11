@@ -1,0 +1,12 @@
+# black
+fastparquet
+hyperopt
+mlflow
+pandas
+prefect
+# prefect-aws
+scikit-learn
+seaborn
+xgboost
+# orjson
+prefect-email

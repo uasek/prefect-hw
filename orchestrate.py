@@ -9,9 +9,12 @@ from sklearn.metrics import mean_squared_error
 import mlflow
 import xgboost as xgb
 from prefect import flow, task
+
+# markdown artifact
 from prefect.artifacts import create_markdown_artifact
 from datetime import datetime
 
+# email (app password is needed)
 from prefect_email import EmailServerCredentials, email_send_message
 email_credentials_block = EmailServerCredentials.load("uasekus-gmail")
 

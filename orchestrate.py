@@ -111,17 +111,16 @@ def train_best_model(
 
         mlflow.xgboost.log_model(booster, artifact_path="models_mlflow")
 
-        datetime_str = datetime.now().__str__()
         report = f"""# Model results
 
-        |   Created time   | RMSE on val |
-        |        ---       |     ---     |
-        |  {datetime_str}  |  {rmse:.3f} |
+        |    Created time    | RMSE on val |
+        |         ---        |     ---     |
+        |  {datetime.now()}  |  {rmse:.3f} |
         """
 
         create_markdown_artifact(
             markdown=report,
-            key="example_report"
+            key="example-report"
         )
 
     return None

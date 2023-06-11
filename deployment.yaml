@@ -1,0 +1,5 @@
+deployments:
+- name: task_3_2
+  entrypoint: orchestrate.py:main_flow
+  work_pool:
+    name: hw_3

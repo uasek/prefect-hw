@@ -126,31 +126,6 @@ def train_best_model(
             key="example-report"
         )
 
-        # send a message
-        message = f"""Hey there!
-
-        This is an email sent by prefect – a Python library for ML-workflow
-        orchestration.
-
-        Docs: https://docs.prefect.io/
-
-        MLOps Zoomcamp (cohort 2023): https://github.com/DataTalksClub/mlops-zoomcamp
-
-        Sincerely,
-        My past self from {datetime.now()}
-
-        P.S.
-        By the way, the model's rmse on val is {rmse:.3f} 
-        """
-
-        email_send_message(
-            subject="Example email from prefect",
-            email_server_credentials=email_credentials_block,
-            msg=message,
-            email_from="uasekus@gmail.com",
-            email_to="myubaranov@gmail.com"
-        )
-
     return None
 
 
@@ -176,6 +151,31 @@ def main_flow(
 
     # Train
     train_best_model(X_train, X_val, y_train, y_val, dv)
+
+    # send an email (email_send_message can only be called inside of a flow)
+    message = f"""Hey there!
+
+    This is an email sent by prefect – a Python library for ML-workflow
+    orchestration.
+
+    Docs: https://docs.prefect.io/
+
+    MLOps Zoomcamp (cohort 2023): https://github.com/DataTalksClub/mlops-zoomcamp
+
+    Sincerely,
+    My past self from {datetime.now()}
+
+    P.S.
+    By the way, the pipeline finished successfully!!
+    """
+
+    email_send_message(
+        subject="Example email from prefect",
+        email_server_credentials=email_credentials_block,
+        msg=message,
+        email_from="uasekus@gmail.com",
+        email_to="myubaranov@gmail.com"
+    )
 
 
 if __name__ == "__main__":

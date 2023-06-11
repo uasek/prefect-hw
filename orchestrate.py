@@ -120,6 +120,7 @@ def main_flow(
 
     # MLflow settings
     # mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    # now mlflow works correctly on a local machine
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_experiment("nyc-taxi-experiment")
 
